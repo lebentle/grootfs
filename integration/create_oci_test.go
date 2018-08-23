@@ -117,6 +117,39 @@ var _ = Describe("Create with OCI images", func() {
 
 				Expect(path.Join(containerSpec.Root.Path, "home", "example")).To(BeARegularFile())
 			})
+
+			Context("and the annotated layer contains a hardlink", func() {
+				BeforeEach(func() {
+					baseImageURL = integration.String2URL(fmt.Sprintf("oci:///%s/assets/oci-test-image/hardlink:latest", workDir))
+				})
+
+				It("succeeds", func() {
+					containerSpec, err := runner.Create(groot.CreateSpec{
+						BaseImageURL: baseImageURL,
+						ID:           randomImageID,
+						Mount:        mountByDefault(),
+					})
+					Expect(err).NotTo(HaveOccurred())
+					Expect(filepath.Join(containerSpec.Root.Path, "home", "file-link")).To(BeAnExistingFile())
+				})
+			})
+
+			Context("and the annotated layer contains a symlink", func() {
+				BeforeEach(func() {
+					baseImageURL = integration.String2URL(fmt.Sprintf("oci:///%s/assets/oci-test-image/symlink:latest", workDir))
+				})
+
+				It("untars the layer in the specified folder", func() {
+					containerSpec, err := runner.Create(groot.CreateSpec{
+						BaseImageURL: baseImageURL,
+						ID:           randomImageID,
+						Mount:        mountByDefault(),
+					})
+					Expect(err).NotTo(HaveOccurred())
+					fmt.Println(containerSpec.Root.Path)
+					Expect(path.Join(containerSpec.Root.Path, "home", "file-symlink")).To(BeAnExistingFile())
+				})
+			})
 		})
 	})
 

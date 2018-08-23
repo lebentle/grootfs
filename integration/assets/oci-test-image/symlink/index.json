@@ -1,0 +1,1 @@
+{"schemaVersion":2,"manifests":[{"mediaType":"application/vnd.oci.image.manifest.v1+json","digest":"sha256:6fd576eaa8811d1216bd21de7391dea7075976a2b42318e4d8aaeee83c01bde7","size":501,"annotations":{"org.opencontainers.image.ref.name":"latest"},"platform":{"architecture":"amd64","os":"darwin"}}]}
