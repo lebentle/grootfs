@@ -78,7 +78,7 @@ func TestGroot(t *testing.T) {
 		grootUser, err := user.Lookup(os.Getenv("GROOTFS_USER"))
 		Expect(err).NotTo(HaveOccurred())
 
-		GrootUsername := grootUser.Username
+		GrootUsername = grootUser.Username
 
 		GrootUID, err = strconv.Atoi(grootUser.Uid)
 		Expect(err).NotTo(HaveOccurred())
